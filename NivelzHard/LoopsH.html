@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loops em JavaScript - Nivel Hard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 80%;
+            max-width: 600px;
+        }
+        .exercise-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+            margin-top: 10px;
+        }
+        input {
+            padding: 8px;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Exercícios de Loops</h2>
+        
+        <div class="exercise-box">
+            <button onclick="mostrarResultado(11, numerosArmstrong())">Números de Armstrong</button>
+            <p id="resultado11" class="result"></p>
+        </div>
+        
+        <div class="exercise-box">
+            <button onclick="mostrarResultado(12, jogoAdivinhacao())">Jogo de Adivinhação</button>
+            <p id="resultado12" class="result"></p>
+        </div>
+        
+        <div class="exercise-box">
+            <button onclick="mostrarResultado(13, ordenarArray())">Ordenação de Array</button>
+            <p id="resultado13" class="result"></p>
+        </div>
+        
+        <div class="exercise-box">
+            <button onclick="mostrarResultado(14, trianguloPascal())">Triângulo de Pascal</button>
+            <p id="resultado14" class="result"></p>
+        </div>
+        
+        <div class="exercise-box">
+            <input type="number" id="decimalInput" placeholder="Digite um número">
+            <button onclick="mostrarResultado(15, converterBinario())">Converter para Binário</button>
+            <p id="resultado15" class="result"></p>
+        </div>
+    </div>
+
+    <script>
+        function mostrarResultado(id, resultado) {
+            document.querySelectorAll('.result').forEach(el => el.style.display = 'none');
+            let elemento = document.getElementById("resultado" + id);
+            elemento.innerHTML = resultado;
+            elemento.style.display = 'block';
+        }
+        
+        function numerosArmstrong() {
+            let resultado = "Números de Armstrong entre 100 e 1000: ";
+            for (let num = 100; num < 1000; num++) {
+                let soma = 0, temp = num;
+                while (temp > 0) {
+                    let digito = temp % 10;
+                    soma += digito ** 3;
+                    temp = Math.floor(temp / 10);
+                }
+                if (soma === num) resultado += num + " ";
+            }
+            return resultado;
+        }
+        
+        function jogoAdivinhacao() {
+            let numeroSorteado = Math.floor(Math.random() * 100) + 1;
+            let tentativa;
+            do {
+                tentativa = prompt("Adivinhe o número (entre 1 e 100):");
+                if (tentativa < numeroSorteado) alert("Tente um número maior!");
+                else if (tentativa > numeroSorteado) alert("Tente um número menor!");
+            } while (tentativa != numeroSorteado);
+            return "Parabéns! Você acertou!";
+        }
+        
+        function ordenarArray() {
+            let numeros = [];
+            for (let i = 0; i < 5; i++) {
+                numeros.push(parseInt(prompt("Digite um número:")));
+            }
+            return "Números ordenados: " + numeros.sort((a, b) => a - b).join(", ");
+        }
+        
+        function trianguloPascal() {
+            let linhas = 5;
+            let resultado = "";
+            let triangulo = [[1]];
+            for (let i = 1; i < linhas; i++) {
+                let linha = [1];
+                for (let j = 1; j < i; j++) {
+                    linha[j] = triangulo[i - 1][j - 1] + triangulo[i - 1][j];
+                }
+                linha.push(1);
+                triangulo.push(linha);
+            }
+            triangulo.forEach(l => resultado += l.join(" ") + "<br>");
+            return resultado;
+        }
+        
+        function converterBinario() {
+            let num = parseInt(document.getElementById("decimalInput").value);
+            let binario = "";
+            while (num > 0) {
+                binario = (num % 2) + binario;
+                num = Math.floor(num / 2);
+            }
+            return `Binário: ${binario || 0}`;
+        }
+    </script>
+</body>
+</html>
